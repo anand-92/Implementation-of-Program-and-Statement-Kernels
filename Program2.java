@@ -109,7 +109,7 @@ public class Program2 extends ProgramSecondary {
         // Make sure to use Statement1 from the library
         // Use Map1L for the context if you want the asserts below to match
 
-        this.name = "";
+        this.name = "Unnamed";
         this.context = new Map1L<String, Statement>();
         this.body = new Statement1();
 
@@ -172,7 +172,7 @@ public class Program2 extends ProgramSecondary {
         assert Tokenizer.isIdentifier(n) : ""
                 + "Violation of: n is a valid IDENTIFIER";
 
-        String oldName = this.name;
+        String oldName = "" + this.name;
         this.name = n;
         return oldName;
     }
@@ -196,8 +196,9 @@ public class Program2 extends ProgramSecondary {
         assert allBlocks(c) : "Violation of: bodies in c"
                 + " are all BLOCK statements";
 
-        Map<String, Statement> oldContext = this.context;
-        this.context = c;
+        Map<String, Statement> oldContext = this.context.newInstance();
+        oldContext.transferFrom(this.context);
+        this.context.transferFrom(c);
         return oldContext;
     }
 
