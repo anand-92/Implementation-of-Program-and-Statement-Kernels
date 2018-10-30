@@ -214,8 +214,9 @@ public class Program2 extends ProgramSecondary {
         assert b instanceof Statement1 : "Violation of: b is a Statement1";
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
 
-        Statement oldBody = this.body;
-        this.body = b;
+        Statement oldBody = new Statement1();
+        oldBody.transferFrom(this.body);
+        this.body.transferFrom(b);
         return oldBody;
     }
 
