@@ -190,6 +190,8 @@ public class Statement2 extends StatementSecondary {
         Statement2 newTree = (Statement2) s;
         StatementLabel root = this.rep.disassemble(child);
         child.add(pos, newTree.rep);
+        // clears newTree
+        newTree.createNewRep();
         this.rep.assemble(root, child);
     }
 
