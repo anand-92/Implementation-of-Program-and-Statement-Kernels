@@ -13,7 +13,7 @@ import components.utilities.Tokenizer;
  * @convention [$this.rep is a valid representation of a Statement]
  * @correspondence this = $this.rep
  *
- * @author Put your name here
+ * @author Nik Anand & Hudson Arledge
  *
  */
 
@@ -334,7 +334,7 @@ public class Statement2 extends StatementSecondary {
         Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
         children.add(0, localS.rep);
         this.rep.assemble(label, children);
-        //clears s1 and s2
+        //clears localS
         localS.createNewRep();
 
     }
