@@ -1,5 +1,5 @@
 import components.sequence.Sequence;
-import components.sequence.Sequence1L;
+import components.sequence.Sequence3;
 import components.statement.Statement;
 import components.statement.StatementSecondary;
 import components.tree.Tree;
@@ -111,6 +111,9 @@ public class Statement2 extends StatementSecondary {
     private void createNewRep() {
 
         this.rep = new Tree1<StatementLabel>();
+        Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
+        StatementLabel root = new StatementLabel(Kind.BLOCK);
+        this.rep.assemble(root, children);
 
     }
 
@@ -182,7 +185,7 @@ public class Statement2 extends StatementSecondary {
         assert s.kind() != Kind.BLOCK : "Violation of: [s is not a BLOCK statement]";
 
         //Create sequence of statementLabel Tree
-        Sequence<Tree<StatementLabel>> child = new Sequence1L<Tree<StatementLabel>>();
+        Sequence<Tree<StatementLabel>> child = new Sequence3<Tree<StatementLabel>>();
 
         Statement2 newTree = (Statement2) s;
         StatementLabel root = this.rep.disassemble(child);
@@ -205,7 +208,7 @@ public class Statement2 extends StatementSecondary {
          */
         Statement2 s = this.newInstance();
         //Create sequence of statementLabel Tree
-        Sequence<Tree<StatementLabel>> child = new Sequence1L<Tree<StatementLabel>>();
+        Sequence<Tree<StatementLabel>> child = new Sequence3<Tree<StatementLabel>>();
 
         //disassemble tree, store root for reconstruction
         StatementLabel root = this.rep.disassemble(child);
@@ -223,7 +226,7 @@ public class Statement2 extends StatementSecondary {
                 + "Violation of: [this is a BLOCK statement]";
 
         //Create sequence of statementLabel Tree
-        Sequence<Tree<StatementLabel>> child = new Sequence1L<Tree<StatementLabel>>();
+        Sequence<Tree<StatementLabel>> child = new Sequence3<Tree<StatementLabel>>();
 
         //disassemble node and store root for reconstruction
         StatementLabel root = this.rep.disassemble(child);
@@ -257,7 +260,7 @@ public class Statement2 extends StatementSecondary {
         assert s != this : "Violation of: s is not this";
         assert s instanceof Statement2 : "Violation of: s is a Statement2";
         assert this.kind() == Kind.IF : "Violation of: [s is an IF statement]";
-        
+
         Statement2 localS = (Statement2) s;
         Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
         StatementLabel label = this.rep.disassemble(children);
@@ -311,7 +314,7 @@ public class Statement2 extends StatementSecondary {
         Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
         StatementLabel label = this.rep.disassemble(children);
         localS1.rep = children.remove(0);
-        localS2.rep = children.remove(1);
+        localS2.rep = children.remove(0);
         this.createNewRep(); // clears this
         return label.condition;
     }
@@ -331,7 +334,6 @@ public class Statement2 extends StatementSecondary {
         this.rep.assemble(label, children);
         //clears s1 and s2
         localS.createNewRep();
-
 
     }
 
@@ -356,11 +358,10 @@ public class Statement2 extends StatementSecondary {
         assert inst != null : "Violation of: inst is not null";
         assert Tokenizer.isIdentifier(inst) : ""
                 + "Violation of: inst is a valid IDENTIFIER";
-        
+
         StatementLabel label = new StatementLabel(Kind.CALL, inst);
         Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
         this.rep.assemble(label, children);
-
 
     }
 
@@ -370,9 +371,9 @@ public class Statement2 extends StatementSecondary {
                 .kind() == Kind.CALL : "Violation of: [s is a CALL statement]";
 
         Sequence<Tree<StatementLabel>> children = this.rep.newSequenceOfTree();
-        this.rep.disassemble(children);
+        StatementLabel label = this.rep.disassemble(children);
         String localS;
-        localS = children.entry(0).toString();
+        localS = label.instruction;
         this.createNewRep(); // clears this
         return localS;
     }
