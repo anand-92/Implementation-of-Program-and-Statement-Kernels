@@ -109,6 +109,10 @@ public class Program2 extends ProgramSecondary {
         // Make sure to use Statement1 from the library
         // Use Map1L for the context if you want the asserts below to match
 
+        this.name = "";
+        this.context = new Map1L<String, Statement>();
+        this.body = new Statement1();
+
     }
 
     /*
@@ -168,19 +172,15 @@ public class Program2 extends ProgramSecondary {
         assert Tokenizer.isIdentifier(n) : ""
                 + "Violation of: n is a valid IDENTIFIER";
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        String oldName = this.name;
+        this.name = n;
+        return oldName;
     }
 
     @Override
     public final Map<String, Statement> newContext() {
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        return this.context.newInstance();
     }
 
     @Override
@@ -196,19 +196,15 @@ public class Program2 extends ProgramSecondary {
         assert allBlocks(c) : "Violation of: bodies in c"
                 + " are all BLOCK statements";
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        Map<String, Statement> oldContext = this.context;
+        this.context = c;
+        return oldContext;
     }
 
     @Override
     public final Statement newBody() {
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        return this.body.newInstance();
     }
 
     @Override
@@ -217,10 +213,9 @@ public class Program2 extends ProgramSecondary {
         assert b instanceof Statement1 : "Violation of: b is a Statement1";
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
 
-        // TODO - fill in body
-
-        // Fix this line to return the result.
-        return null;
+        Statement oldBody = this.body;
+        this.body = b;
+        return oldBody;
     }
 
 }
