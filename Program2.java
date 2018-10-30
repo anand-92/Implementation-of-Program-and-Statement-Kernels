@@ -14,7 +14,7 @@ import components.utilities.Tokenizer;
  * @convention [$this.rep is a valid representation of a Program]
  * @correspondence this = ($this.name, $this.context, $this.body)
  *
- * @author Put your name here
+ * @author Nik Anand & Hudson Arledge
  *
  */
 public class Program2 extends ProgramSecondary {
@@ -196,6 +196,7 @@ public class Program2 extends ProgramSecondary {
         assert allBlocks(c) : "Violation of: bodies in c"
                 + " are all BLOCK statements";
 
+        // transfer current context to oldContext
         Map<String, Statement> oldContext = this.context.newInstance();
         oldContext.transferFrom(this.context);
         this.context.transferFrom(c);
@@ -214,6 +215,7 @@ public class Program2 extends ProgramSecondary {
         assert b instanceof Statement1 : "Violation of: b is a Statement1";
         assert b.kind() == Kind.BLOCK : "Violation of: b is a BLOCK statement";
 
+        // transfer current body to oldBody
         Statement oldBody = new Statement1();
         oldBody.transferFrom(this.body);
         this.body.transferFrom(b);
