@@ -1,0 +1,45 @@
+PROGRAM Test3 IS
+
+  INSTRUCTION one IS
+     move
+     move
+     infect
+  END one
+  
+  INSTRUCTION two IS
+     turnright
+  END two
+
+  INSTRUCTION three IS
+     turnleft
+     infect
+     move
+  END three
+
+  INSTRUCTION four IS
+     turnleft
+     infect
+     turnleft
+     move
+  END four
+
+  INSTRUCTION five IS
+     turnleft
+     infect
+     turnright
+     move
+  END five
+BEGIN
+  WHILE random DO
+     three
+     three
+  END WHILE
+  IF next-is-wall THEN
+     three
+     one
+     five
+  END IF
+  IF next-is-enemy THEN
+     four
+  END IF
+END Test3

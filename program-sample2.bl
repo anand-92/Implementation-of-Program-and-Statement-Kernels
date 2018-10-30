@@ -1,0 +1,30 @@
+PROGRAM Test2 IS
+
+  INSTRUCTION one IS
+     move
+     turnleft
+  END one
+  
+  INSTRUCTION two IS
+    turnright
+    move
+  END two
+
+  INSTRUCTION three IS
+     turnleft
+     turntight
+     infect
+  END three
+
+BEGIN
+  WHILE next-is-not-enemy DO
+    one
+  END WHILE
+  WHILE next-is-enemy DO
+    IF next-is-wall THEN    
+	three
+    ELSE
+	two
+    END IF
+  END WHILE
+END Test2
