@@ -350,21 +350,21 @@ public abstract class StatementTest {
     }
     
      /**
-     * Test removeFromBlock in the middle leaving a non-empty block behind.
+     * Test removeFromBlock in the interior leaving a non-empty block behind.
      */
     @Test
-    public final void testRemoveFromBlockMiddleLeavingNonEmpty() {
+    public final void testRemoveFromBlockInteriorLeavingNonEmpty() {
         /*
          * Setup
          */
         Statement sTest = this.createFromFileTest(FILE_NAME_1);
         Statement sRef = this.createFromFileRef(FILE_NAME_1);
-        Statement nestedRef = sRef.removeFromBlock(2);
+        Statement nestedRef = sRef.removeFromBlock(1);
 
         /*
          * The call
          */
-        Statement nestedTest = sTest.removeFromBlock(2);
+        Statement nestedTest = sTest.removeFromBlock(1);
 
         /*
          * Evaluation
