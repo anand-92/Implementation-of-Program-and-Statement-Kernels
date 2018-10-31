@@ -23,6 +23,7 @@ public abstract class StatementTest {
      * The name of a file containing a sequence of BL statements.
      */
     private static final String FILE_NAME_1 = "data/statement-sample.bl";
+    private static final String FILE_NAME_2 = "data/statement-sample2.bl"; 
 
     // TODO - define file names for additional test inputs
 
@@ -323,6 +324,78 @@ public abstract class StatementTest {
         assertEquals(sRef, sTest);
         assertEquals(nestedRef, nestedTest);
     }
+    
+     /**
+     * Test removeFromBlock at the end leaving a non-empty block behind.
+     */
+    @Test
+    public final void testRemoveFromBlockEndLeavingNonEmpty() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sRef = this.createFromFileRef(FILE_NAME_1);
+        Statement nestedRef = sRef.removeFromBlock(sRef.lengthOfBlock() - 1);
+
+        /*
+         * The call
+         */
+        Statement nestedTest = sTest.removeFromBlock(sTest.lengthOfBlock() - 1);
+
+        /*
+         * Evaluation
+         */
+        assertEquals(sRef, sTest);
+        assertEquals(nestedRef, nestedTest);
+    }
+    
+     /**
+     * Test removeFromBlock in the middle leaving a non-empty block behind.
+     */
+    @Test
+    public final void testRemoveFromBlockMiddleLeavingNonEmpty() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sRef = this.createFromFileRef(FILE_NAME_1);
+        Statement nestedRef = sRef.removeFromBlock(2);
+
+        /*
+         * The call
+         */
+        Statement nestedTest = sTest.removeFromBlock(2);
+
+        /*
+         * Evaluation
+         */
+        assertEquals(sRef, sTest);
+        assertEquals(nestedRef, nestedTest);
+    }
+    
+     /**
+     * Test removeFromBlock in the front leaving an empty block behind.
+     */
+    @Test
+    public final void testRemoveFromBlockFrontLeavingEmpty() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_2);
+        Statement sRef = this.createFromFileRef(FILE_NAME_2);
+        Statement nestedRef = sRef.removeFromBlock(0);
+        
+        /*
+         * The call
+         */       
+        Statement nestedTest = sTest.removeFromBlock(0);
+        
+        /*
+         * Evaluation
+         */
+        assertEquals(sRef, sTest);
+        assertEquals(nestedRef, nestedTest);
+    }
 
     /**
      * Test lengthOfBlock, greater than zero.
@@ -339,6 +412,32 @@ public abstract class StatementTest {
         /*
          * The call
          */
+        int lengthTest = sTest.lengthOfBlock();
+
+        /*
+         * Evaluation
+         */
+        assertEquals(lengthRef, lengthTest);
+        assertEquals(sRef, sTest);
+    }
+    
+        /**
+     * Test lengthOfBlock, is zero
+     */
+    @Test
+    public final void testLengthOfBlockEmpty() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_2);
+        Statement sRef = this.createFromFileRef(FILE_NAME_2);
+        sRef.removeFromBlock(0); 
+        int lengthRef = sRef.lengthOfBlock();
+
+        /*
+         * The call
+         */
+        sTest.removeFromBlock(0); 
         int lengthTest = sTest.lengthOfBlock();
 
         /*
@@ -585,7 +684,5 @@ public abstract class StatementTest {
         assertEquals(sRef, sTest);
         assertEquals(nRef, nTest);
     }
-
-    // TODO - provide additional test cases to thoroughly test StatementKernel
 
 }
