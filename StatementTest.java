@@ -137,6 +137,87 @@ public abstract class StatementTest {
         assertEquals(kRef, kTest);
         assertEquals(sRef, sTest);
     }
+    
+     /**
+     * Test kind of an IF statement.
+     */
+    @Test
+    public final void testKindIf() {
+        /*
+         * Setup
+         */
+        final int ifPos = 1;
+        Statement sourceTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sourceRef = this.createFromFileRef(FILE_NAME_1);
+        Statement sTest = sourceTest.removeFromBlock(ifPos);
+        Statement sRef = sourceRef.removeFromBlock(ifPos);
+        Kind kRef = sRef.kind();
+
+        /*
+         * The call
+         */
+        Kind kTest = sTest.kind();
+
+        /*
+         * Evaluation
+         */
+        assertEquals(kRef, kTest);
+        assertEquals(sRef, sTest);
+    }
+    
+     /**
+     * Test kind of an IF-ELSE statement.
+     */
+    @Test
+    public final void testKindIfElse() {
+        /*
+         * Setup
+         */
+        final int ifElsePos = 2;
+        Statement sourceTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sourceRef = this.createFromFileRef(FILE_NAME_1);
+        Statement sTest = sourceTest.removeFromBlock(ifElsePos);
+        Statement sRef = sourceRef.removeFromBlock(ifElsePos);
+        Kind kRef = sRef.kind();
+
+        /*
+         * The call
+         */
+        Kind kTest = sTest.kind();
+
+        /*
+         * Evaluation
+         */
+        assertEquals(kRef, kTest);
+        assertEquals(sRef, sTest);
+    }
+    
+     /**
+     * Test kind of a CALL statement.
+     */
+    @Test
+    public final void testKindCall() {
+        /*
+         * Setup
+         */
+        final int callPos = 0;
+        Statement sourceTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sourceRef = this.createFromFileRef(FILE_NAME_1);
+        Statement sTest = sourceTest.removeFromBlock(callPos);
+        Statement sRef = sourceRef.removeFromBlock(callPos);
+        Kind kRef = sRef.kind();
+
+        /*
+         * The call
+         */
+        Kind kTest = sTest.kind();
+
+        /*
+         * Evaluation
+         */
+        assertEquals(kRef, kTest);
+        assertEquals(sRef, sTest);
+    }
 
     /**
      * Test addToBlock at an interior position.
@@ -157,6 +238,60 @@ public abstract class StatementTest {
          * The call
          */
         sTest.addToBlock(2, nestedTest);
+
+        /*
+         * Evaluation
+         */
+        assertEquals(emptyBlock, nestedTest);
+        assertEquals(sRef, sTest);
+    }
+    
+     /**
+     * Test addToBlock at the starting position.
+     */
+    @Test
+    public final void testAddToBlockStart() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sRef = this.createFromFileRef(FILE_NAME_1);
+        Statement emptyBlock = sRef.newInstance();
+        Statement nestedTest = sTest.removeFromBlock(1);
+        Statement nestedRef = sRef.removeFromBlock(1);
+        sRef.addToBlock(0, nestedRef);
+
+        /*
+         * The call
+         */
+        sTest.addToBlock(0, nestedTest);
+
+        /*
+         * Evaluation
+         */
+        assertEquals(emptyBlock, nestedTest);
+        assertEquals(sRef, sTest);
+    }
+    
+         /**
+     * Test addToBlock at the last position.
+     */
+    @Test
+    public final void testAddToBlockLast() {
+        /*
+         * Setup
+         */
+        Statement sTest = this.createFromFileTest(FILE_NAME_1);
+        Statement sRef = this.createFromFileRef(FILE_NAME_1);
+        Statement emptyBlock = sRef.newInstance();
+        Statement nestedTest = sTest.removeFromBlock(1);
+        Statement nestedRef = sRef.removeFromBlock(1);
+        sRef.addToBlock(sRef.lengthOfBlock(), nestedRef);
+
+        /*
+         * The call
+         */
+        sTest.addToBlock(sTest.lengthOfBlock(), nestedTest);
 
         /*
          * Evaluation
